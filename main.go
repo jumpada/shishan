@@ -4,7 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
-	_ "wechat/routers"
+	_ "shishan/routers"
 )
 
 func init() {

@@ -2,7 +2,7 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
-	"wechat/controllers"
+	"shishan/controllers"
 )
 
 func init() {
@@ -12,4 +12,5 @@ func init() {
 	beego.Router("/overview/page", &controllers.OverviewController{}, "get:Page")
 	//社区资讯页面
 	beego.Router("/info/page", &controllers.InfoController{}, "get:Page")
+	beego.Router("/info/list", &controllers.InfoController{}, "get:List")
 }

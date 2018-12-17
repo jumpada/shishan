@@ -49,7 +49,7 @@ ORDER BY
 	release_time DESC
 LIMIT ?,?`, (page-1)*limit, limit).QueryRows(&messages)
 	if err == nil {
-		c.Data["data"] = messages
+		c.Data["json"] = messages
 	}
 	c.ServeJSON()
 }
