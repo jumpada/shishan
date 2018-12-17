@@ -6,7 +6,7 @@ import (
 )
 
 /**
-资讯控制器啊
+资讯控制器
 */
 type InfoController struct {
 	beego.Controller
