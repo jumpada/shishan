@@ -19,7 +19,7 @@ type DefaultController struct {
 /**
 微信接入认证
 */
-func (c *DefaultController) Access() {
+func (c *DefaultController) Get() {
 	timestamp := c.GetString("timestamp")
 	nonce := c.GetString("nonce")
 	signature := c.GetString("signature")
@@ -35,4 +35,11 @@ func (c *DefaultController) Access() {
 	} else {
 		c.Ctx.WriteString("access failed")
 	}
+}
+
+/**
+微信消息回复
+ */
+func (c *DefaultController) Post() {
+	c.Ctx.WriteString("ok")
 }

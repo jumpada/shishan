@@ -7,9 +7,13 @@ import (
 
 func init() {
 	//微信接入验证
-	beego.Router("/access", &controllers.DefaultController{}, "get:Access")
+	beego.Router("/access", &controllers.DefaultController{})
+	//微信消息回复
+	beego.Router("/access", &controllers.DefaultController{})
 	//社区介绍页面
-	beego.Router("/intro", &controllers.IntroController{})
+	beego.Router("/introduction", &controllers.IntroductionController{})
+	//狮山印象页面
+	beego.Router("/impression", &controllers.ImpressionController{})
 	//社区资讯页面
 	beego.Router("/info/page", &controllers.InfoController{}, "get:Page")
 	beego.Router("/info/list", &controllers.InfoController{}, "get:List")

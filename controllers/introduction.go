@@ -9,14 +9,14 @@ import (
 /**
 社区介绍控制器
 */
-type IntroController struct {
+type IntroductionController struct {
 	beego.Controller
 }
 
 /**
 社区介绍页面
  */
-func (c *IntroController) Get() {
+func (c *IntroductionController) Get() {
 	type Intro struct {
 		Id     int    `json:"id"`
 		Detail string `json:"detail"`
@@ -29,5 +29,5 @@ func (c *IntroController) Get() {
 		intro.Detail = detail
 		c.Data["data"] = intro
 	}
-	c.TplName = "intro/page.html"
+	c.TplName = "introduction/page.html"
 }
