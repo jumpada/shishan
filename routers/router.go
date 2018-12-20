@@ -18,4 +18,6 @@ func init() {
 	beego.Router("/impression", &controllers.ImpressionController{})
 	//社区动态页面
 	beego.Router("/community_service/page", &controllers.CommunityServiceController{}, "get:Page")
+	//社区动态数据
+	beego.Router("/community_service/list", &controllers.CommunityServiceController{}, "get:List")
 }

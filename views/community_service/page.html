@@ -7,348 +7,304 @@
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
     <link rel="stylesheet" href="/static/css/mui.css">
-    {{/*<style>*/}}
-        {{/*.mui-bar ~ .mui-content .mui-fullscreen {*/}}
-            {{/*top: 44px;*/}}
-            {{/*height: auto;*/}}
-        {{/*}*/}}
-
-        {{/*.mui-pull-top-tips {*/}}
-            {{/*position: absolute;*/}}
-            {{/*top: -20px;*/}}
-            {{/*left: 50%;*/}}
-            {{/*margin-left: -25px;*/}}
-            {{/*width: 40px;*/}}
-            {{/*height: 40px;*/}}
-            {{/*border-radius: 100%;*/}}
-            {{/*z-index: 1;*/}}
-        {{/*}*/}}
-
-        {{/*.mui-bar ~ .mui-pull-top-tips {*/}}
-            {{/*top: 24px;*/}}
-        {{/*}*/}}
-
-        {{/*.mui-pull-top-wrapper {*/}}
-            {{/*width: 42px;*/}}
-            {{/*height: 42px;*/}}
-            {{/*display: block;*/}}
-            {{/*text-align: center;*/}}
-            {{/*background-color: #efeff4;*/}}
-            {{/*border: 1px solid #ddd;*/}}
-            {{/*border-radius: 25px;*/}}
-            {{/*background-clip: padding-box;*/}}
-            {{/*box-shadow: 0 4px 10px #bbb;*/}}
-            {{/*overflow: hidden;*/}}
-        {{/*}*/}}
-
-        {{/*.mui-pull-top-tips.mui-transitioning {*/}}
-            {{/*-webkit-transition-duration: 200ms;*/}}
-            {{/*transition-duration: 200ms;*/}}
-        {{/*}*/}}
-
-        {{/*.mui-pull-top-tips .mui-pull-loading {*/}}
-
-            {{/*margin: 0;*/}}
-        {{/*}*/}}
-
-        {{/*.mui-pull-top-wrapper .mui-icon,*/}}
-        {{/*.mui-pull-top-wrapper .mui-spinner {*/}}
-            {{/*margin-top: 7px;*/}}
-        {{/*}*/}}
-
-        {{/*.mui-pull-bottom-tips {*/}}
-            {{/*text-align: center;*/}}
-            {{/*background-color: #efeff4;*/}}
-            {{/*font-size: 15px;*/}}
-            {{/*line-height: 40px;*/}}
-            {{/*color: #777;*/}}
-        {{/*}*/}}
-
-        {{/*.mui-pull-top-canvas {*/}}
-            {{/*overflow: hidden;*/}}
-            {{/*background-color: #fafafa;*/}}
-            {{/*border-radius: 40px;*/}}
-            {{/*box-shadow: 0 4px 10px #bbb;*/}}
-            {{/*width: 40px;*/}}
-            {{/*height: 40px;*/}}
-            {{/*margin: 0 auto;*/}}
-        {{/*}*/}}
-
-        {{/*.mui-pull-top-canvas canvas {*/}}
-            {{/*width: 40px;*/}}
-        {{/*}*/}}
-
-        {{/*.mui-slider-indicator.mui-segmented-control {*/}}
-            {{/*background-color: #efeff4;*/}}
-        {{/*}*/}}
-    {{/*</style>*/}}
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/mui.js"></script>
+    <script src="/static/js/mui.pullToRefresh.js"></script>
+    <script src="/static/js/mui.pullToRefresh.material.js"></script>
     <style>
-        .mui-control-content {
-            background-color: white;
-            min-height: 215px;
+        .mui-bar ~ .mui-content .mui-fullscreen {
+            top: 44px;
+            height: auto;
         }
-        .mui-control-content .mui-loading {
-            margin-top: 50px;
+
+        .mui-pull-top-tips {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            margin-left: -25px;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            z-index: 1;
+        }
+
+        .mui-bar ~ .mui-pull-top-tips {
+            top: 24px;
+        }
+
+        .mui-pull-top-wrapper {
+            width: 42px;
+            height: 42px;
+            display: block;
+            text-align: center;
+            background-color: #efeff4;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            background-clip: padding-box;
+            box-shadow: 0 4px 10px #bbb;
+            overflow: hidden;
+        }
+
+        .mui-pull-top-tips.mui-transitioning {
+            -webkit-transition-duration: 200ms;
+            transition-duration: 200ms;
+        }
+
+        .mui-pull-top-tips .mui-pull-loading {
+            /*-webkit-backface-visibility: hidden;
+            -webkit-transition-duration: 400ms;
+            transition-duration: 400ms;*/
+
+            margin: 0;
+        }
+
+        .mui-pull-top-wrapper .mui-icon,
+        .mui-pull-top-wrapper .mui-spinner {
+            margin-top: 7px;
+        }
+
+        .mui-pull-top-wrapper .mui-icon.mui-reverse {
+            /*-webkit-transform: rotate(180deg) translateZ(0);*/
+        }
+
+        .mui-pull-bottom-tips {
+            text-align: center;
+            background-color: #efeff4;
+            font-size: 15px;
+            line-height: 40px;
+            color: #777;
+        }
+
+        .mui-pull-top-canvas {
+            overflow: hidden;
+            background-color: #fafafa;
+            border-radius: 40px;
+            box-shadow: 0 4px 10px #bbb;
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+        }
+
+        .mui-pull-top-canvas canvas {
+            width: 40px;
+        }
+
+        .mui-slider-indicator.mui-segmented-control {
+            background-color: #efeff4;
+        }
+
+        .mui-table-view .mui-media-object {
+            max-width: initial;
+            width: 90px !important;
+            height: 70px;
+        }
+
+        .meta-info {
+            position: absolute;
+            left: 115px;
+            right: 15px;
+            bottom: 8px;
+            color: #8f8f94;
+        }
+
+        .meta-info .author,
+        .meta-info .time {
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        .meta-info .time {
+            float: right;
+        }
+
+        .mui-table-view:before,
+        .mui-table-view:after {
+            height: 0;
+        }
+
+        .mui-content > .mui-table-view:first-child {
+            margin-top: 1px;
         }
     </style>
 </head>
 <body>
-{{/*<div class="mui-content">*/}}
-    {{/*<div id="slider" class="mui-slider mui-fullscreen">*/}}
-        {{/*<div id="sliderSegmentedControl"*/}}
-             {{/*class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">*/}}
-            {{/*<div class="mui-scroll">*/}}
-                {{/*<a class="mui-control-item mui-active" href="#item1mobile">*/}}
-                    {{/*通知*/}}
-                {{/*</a>*/}}
-                {{/*<a class="mui-control-item" href="#item2mobile">*/}}
-                    {{/*公告*/}}
-                {{/*</a>*/}}
-            {{/*</div>*/}}
-        {{/*</div>*/}}
-        {{/*<div class="mui-slider-group">*/}}
-            {{/*<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">*/}}
-                {{/*<div id="scroll1" class="mui-scroll-wrapper">*/}}
-                    {{/*<div class="mui-scroll">*/}}
-                        {{/*<ul class="mui-table-view">*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-1*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-2*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-3*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-4*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-5*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-6*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-7*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-8*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-9*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-10*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-11*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-12*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-13*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-14*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-15*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-16*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-17*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-18*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-19*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第1个选项卡子项-20*/}}
-                            {{/*</li>*/}}
-                        {{/*</ul>*/}}
-                    {{/*</div>*/}}
-                {{/*</div>*/}}
-            {{/*</div>*/}}
-            {{/*<div id="item2mobile" class="mui-slider-item mui-control-content">*/}}
-                {{/*<div class="mui-scroll-wrapper">*/}}
-                    {{/*<div class="mui-scroll">*/}}
-                        {{/*<ul class="mui-table-view">*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-1*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-2*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-3*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-4*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-5*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-6*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-7*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-8*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-9*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-10*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-11*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-12*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-13*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-14*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-15*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-16*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-17*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-18*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-19*/}}
-                            {{/*</li>*/}}
-                            {{/*<li class="mui-table-view-cell">*/}}
-                                {{/*第2个选项卡子项-20*/}}
-                            {{/*</li>*/}}
-                        {{/*</ul>*/}}
-                    {{/*</div>*/}}
-                {{/*</div>*/}}
-            {{/*</div>*/}}
-        {{/*</div>*/}}
-    {{/*</div>*/}}
-{{/*</div>*/}}
+<div>
+    <img src="/static/img/community_service.jpg" width="100%" height="150">
+</div>
 <div class="mui-content">
-    <div id="slider" class="mui-slider">
-        <div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-            <a class="mui-control-item" href="#item1mobile">
-                通知
-            </a>
-            <a class="mui-control-item" href="#item2mobile">
-                公告
-            </a>
+    <div id="slider" class="mui-slider mui-fullscreen" style="top: 151px;">
+        <div id="sliderSegmentedControl"
+             class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+            <div>
+                <a class="mui-control-item mui-active" href="#item1mobile" style="padding: 0 50px">
+                    通知
+                </a>
+                <a class="mui-control-item" href="#item2mobile" style="padding: 0 50px">
+                    公告
+                </a>
+            </div>
         </div>
         <div class="mui-slider-group">
             <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
                 <div id="scroll1" class="mui-scroll-wrapper">
                     <div class="mui-scroll">
-                        <ul class="mui-table-view">
-                            <li class="mui-table-view-cell">
-                                第一个选项卡子项-1
-                            </li>
-                            <li class="mui-table-view-cell">
-                                第一个选项卡子项-2
-                            </li>
-                            <li class="mui-table-view-cell">
-                                第一个选项卡子项-3
-                            </li>
-                            <li class="mui-table-view-cell">
-                                第一个选项卡子项-4
-                            </li>
-                            <li class="mui-table-view-cell">
-                                第一个选项卡子项-5
-                            </li>
-                            <li class="mui-table-view-cell">
-                                第一个选项卡子项-6
-                            </li>
+                        <ul class="mui-table-view" id="tab1">
                         </ul>
                     </div>
                 </div>
             </div>
             <div id="item2mobile" class="mui-slider-item mui-control-content">
-                <div id="scroll2" class="mui-scroll-wrapper">
+                <div class="mui-scroll-wrapper">
                     <div class="mui-scroll">
-                        <div class="mui-loading">
-                            <div class="mui-spinner">
-                            </div>
-                        </div>
+                        <ul class="mui-table-view" id="tab2">
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="/static/js/mui.js"></script>
-<script src="/static/js/mui.pullToRefresh.js"></script>
-<script src="/static/js/mui.pullToRefresh.material.js"></script>
 <script>
-    // mui.init();
-    // (function ($) {
-    //     //阻尼系数
-    //     var deceleration = mui.os.ios ? 0.003 : 0.0009;
-    //     $('.mui-scroll-wrapper').scroll({
-    //         bounce: false,
-    //         indicators: true, //是否显示滚动条
-    //         deceleration: deceleration
-    //     });
-    //     $.ready(function () {
-    //         //循环初始化所有下拉刷新，上拉加载。
-    //         $.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function (index, pullRefreshEl) {
-    //             $(pullRefreshEl).pullToRefresh({
-    //                 down: {
-    //                     callback: function () {
-    //                         var self = this;
-    //                         setTimeout(function () {
-    //                             var ul = self.element.querySelector('.mui-table-view');
-    //                             ul.insertBefore(createFragment(ul, index, 10, true), ul.firstChild);
-    //                             self.endPullDownToRefresh();
-    //                         }, 1000);
-    //                     }
-    //                 },
-    //                 up: {
-    //                     callback: function () {
-    //                         var self = this;
-    //                         setTimeout(function () {
-    //                             var ul = self.element.querySelector('.mui-table-view');
-    //                             ul.appendChild(createFragment(ul, index, 5));
-    //                             self.endPullUpToRefresh();
-    //                         }, 1000);
-    //                     }
-    //                 }
-    //             });
-    //         });
-    //         var createFragment = function (ul, index, count, reverse) {
-    //             var length = ul.querySelectorAll('li').length;
-    //             var fragment = document.createDocumentFragment();
-    //             var li;
-    //             for (var i = 0; i < count; i++) {
-    //                 li = document.createElement('li');
-    //                 li.className = 'mui-table-view-cell';
-    //                 li.innerHTML = '第' + (index + 1) + '个选项卡子项-' + (length + (reverse ? (count - i) : (i + 1)));
-    //                 fragment.appendChild(li);
-    //             }
-    //             return fragment;
-    //         };
-    //     });
-    // })(mui);
+    mui.init();
+    var page = 1, more = true;
+    mui('.mui-scroll-wrapper').scroll({
+        bounce: false,
+        indicators: true, //是否显示滚动条
+        deceleration: 0.0006
+    });
+    mui.ready(function () {
+        //循环初始化所有下拉刷新，上拉加载。
+        mui.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function (index, pullRefreshEl) {
+            mui(pullRefreshEl).pullToRefresh({
+                down: {
+                    callback: function () {
+                        more = true;
+                        var self = this;
+                        $.ajax({
+                            url: '/community_service/list',
+                            type: 'GET',
+                            dataType: 'json',
+                            data: {
+                                page: 1,
+                                limit: 10,
+                                category: index + 1
+                            },
+                            cache: false,
+                            async: false,
+                            success: function (data) {
+                                self.endPullDownToRefresh();
+                                if (data && data.length > 0) {
+                                    var html = '';
+                                    data.forEach(function (item) {
+                                        html += '<li class="mui-table-view-cell mui-media" id="' + item.id + '"><a href="javascript:;">';
+                                        html += '<img class="mui-media-object mui-pull-left" src="' + item.cover + '">';
+                                        html += '<div class="mui-media-body"><div class="mui-ellipsis-2">' + item.title + '</div></div><div class="meta-info">';
+                                        html += '<div class="author">狮山社区</div><div class="time">' + item.releaseTime + '</div></div> </a></li>';
+                                    });
+                                    document.getElementById('tab' + (index + 1)).innerHTML = html;
+                                }
+                            }
+                        });
+                    }
+                },
+                up: {
+                    callback: function () {
+                        var self = this, param = {
+                            page: page + 1,
+                            limit: 10,
+                            category: index + 1
+                        };
+                        if (more) {
+                            $.ajax({
+                                url: '/community_service/list',
+                                type: 'GET',
+                                dataType: 'json',
+                                data: param,
+                                cache: false,
+                                async: false,
+                                success: function (data) {
+                                    self.endPullUpToRefresh();
+                                    if (data && data.length > 0) {
+                                        page++;
+                                        var html = '';
+                                        data.forEach(function (item) {
+                                            html += '<li class="mui-table-view-cell mui-media" id="' + item.id + '"><a href="javascript:;">';
+                                            html += '<img class="mui-media-object mui-pull-left" src="' + item.cover + '">';
+                                            html += '<div class="mui-media-body"><div class="mui-ellipsis-2">' + item.title + '</div></div><div class="meta-info">';
+                                            html += '<div class="author">狮山社区</div><div class="time">' + item.releaseTime + '</div></div> </a></li>';
+                                        });
+                                        document.getElementById('tab' + (index + 1)).innerHTML = html;
+                                    } else {
+                                        more = false;
+                                    }
+                                }
+                            });
+                        } else {
+                            self.endPullUpToRefresh();
+                        }
+                    }
+                }
+            });
+        });
+    });
+    mui("#tab1").on('tap', '.mui-table-view-cell', function () {
+        // //获取id
+        var id = this.getAttribute("id");
+        window.location = '/community_service/detail?id=' + id;
+    });
+    mui("#tab2").on('tap', '.mui-table-view-cell', function () {
+        // //获取id
+        var id = this.getAttribute("id");
+        window.location = '/community_service/detail?id=' + id;
+    });
+    $.ajax({
+        url: '/community_service/list',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            page: 1,
+            limit: 10,
+            category: 1
+        },
+        cache: false,
+        async: false,
+        success: function (data) {
+            if (data && data.length > 0) {
+                var html = '';
+                data.forEach(function (item) {
+                    html += '<li class="mui-table-view-cell mui-media" id="' + item.id + '"><a href="javascript:;">';
+                    html += '<img class="mui-media-object mui-pull-left" src="' + item.cover + '">';
+                    html += '<div class="mui-media-body"><div class="mui-ellipsis-2">' + item.title + '</div></div><div class="meta-info">';
+                    html += '<div class="author">狮山社区</div><div class="time">' + item.releaseTime + '</div></div> </a></li>';
+                });
+                document.getElementById('tab1').innerHTML = html;
+            }
+        }
+    });
+    $.ajax({
+        url: '/community_service/list',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+            page: 1,
+            limit: 10,
+            category: 2
+        },
+        cache: false,
+        async: false,
+        success: function (data) {
+            if (data && data.length > 0) {
+                var html = '';
+                data.forEach(function (item) {
+                    html += '<li class="mui-table-view-cell mui-media" id="' + item.id + '"><a href="javascript:;">';
+                    html += '<img class="mui-media-object mui-pull-left" src="' + item.cover + '">';
+                    html += '<div class="mui-media-body"><div class="mui-ellipsis-2">' + item.title + '</div></div><div class="meta-info">';
+                    html += '<div class="author">狮山社区</div><div class="time">' + item.releaseTime + '</div></div> </a></li>';
+                });
+                document.getElementById('tab2').innerHTML = html;
+            }
+        }
+    });
 </script>
 </body>
 </html>
