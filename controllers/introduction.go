@@ -3,7 +3,6 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
-	"strings"
 )
 
 /**
@@ -25,8 +24,6 @@ func (c *IntroductionController) Get() {
 	o := orm.NewOrm()
 	err := o.Raw("SELECT * FROM ss_intro LIMIT 1").QueryRow(&intro)
 	if err == nil {
-		detail := strings.Replace(intro.Detail, "/file?", beego.AppConfig.String("file_path"), -1)
-		intro.Detail = detail
 		c.Data["data"] = intro
 	}
 	c.TplName = "introduction/page.html"
