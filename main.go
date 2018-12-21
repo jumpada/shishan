@@ -11,5 +11,6 @@ func init() {
 	_ = orm.RegisterDataBase("default", "mysql", beego.AppConfig.String("mysql_url"), 30)
 }
 func main() {
+	beego.SetStaticPath("/resources", "resources")
 	beego.Run()
 }

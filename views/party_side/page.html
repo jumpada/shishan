@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>党在身边</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <link rel="stylesheet" href="/static/css/mui.css">
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/mui.js"></script>
+    <style>
+        .mui-media {
+            font-size: 14px;
+        }
+
+        .mui-table-view .mui-media-object {
+            max-width: initial;
+            width: 90px;
+            height: 70px;
+        }
+
+        .meta-info {
+            position: absolute;
+            left: 115px;
+            right: 15px;
+            bottom: 8px;
+            color: #8f8f94;
+        }
+
+        .meta-info .author,
+        .meta-info .time {
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        .meta-info .time {
+            float: right;
+        }
+
+        .mui-table-view:before,
+        .mui-table-view:after {
+            height: 0;
+        }
+
+        .mui-content > .mui-table-view:first-child {
+            margin-top: 1px;
+        }
+
+        .partySide+.partySide{
+            margin-top: 10px;
+        }
+
+        .mui-table-view-cell:after{
+            height: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="mui-content">
+    <div>
+        <img src="/static/img/party_side.gif" width="100%" height="150">
+    </div>
+    <div id="list" class="mui-scroll-wrapper" style="top: 151px;">
+        <div class="mui-scroll">
+            <ul class="mui-table-view" style="padding: 8px;" id="partySide">
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    var data ={{.data}}, html = '';
+    data.forEach(function (item) {
+        html += '<li class="mui-table-view-cell mui-media partySide" style="border: 1px solid #eeeeee;" id="' + item.id + '">';
+        html += '<a href="javascript:;">';
+        html += '<img class="mui-media-object mui-pull-left" src="' + item.cover + '">';
+        html += '<div class="mui-media-body">';
+        html += '<div class="mui-ellipsis-2">' + item.title + '</div></div><div class="meta-info"><div class="author">狮山社区</div>';
+        html += '<div class="time">' + item.releaseTime + '</div></div></a></li>';
+    })
+    $('#partySide').html(html);
+    $('.partySide').on('click', function () {
+        var id = $(this).attr('id');
+        window.location = '/party_side/detail?id=' + id;
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>党员活动</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <script src="/static/js/jquery.js"></script>
+    <style>
+        body {
+            padding: 0;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        table {
+            border: 1px solid #e1e1e1;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        td {
+            border: 1px solid #e1e1e1;
+            padding: 5px 3px;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 8px;
+        }
+
+        li + li {
+            margin-top: 10px;
+        }
+
+        .item {
+            width: 65px;
+            text-align: center;
+            background-color: #eeeeee;
+        }
+    </style>
+</head>
+<body>
+<div class="mui-content">
+    <div>
+        <img src="/static/img/party_activity.gif" width="100%" height="150">
+    </div>
+    <div style="text-align: center;border-bottom: 1px solid red;height: 28px;line-height: 26px; color: red;">
+        狮山社区党员活动菜单
+    </div>
+    <div style="top: 151px;">
+        <ul id="partyActivity">
+        </ul>
+    </div>
+</div>
+<script>
+    var data ={{.data}}, html = '';
+    data.forEach(function (item) {
+        html += '<li><table><tr><td class="item">项目</td><td>' + item.title + '</td><td class="item">活动时间</td><td>' + item.activityTime + '</td>';
+        html += '</tr><tr><td class="item">活动地点</td><td>' + item.activitySite + '</td><td class="item">参加人员</td><td>' + item.attendee + '</td>';
+        html += '</tr><tr><td class="item">负责人</td><td>' + item.principal + '</td><td class="item">联系电话</td><td>' + item.phone + '</td>';
+        html += '</tr><tr><td class="item">备注</td><td colspan="3">' + item.remark + '</td></tr></table></li>';
+    });
+    $('#partyActivity').html(html);
+</script>
+</body>
+</html>

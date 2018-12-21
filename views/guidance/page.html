@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>办事指南</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <script src="/static/js/jquery.js"></script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: #FFFFFF;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 10px;
+        }
+
+        li {
+            display: block;
+            border: 1px solid #eeeeee;
+            padding: 8px;
+        }
+
+        li + li {
+            margin-top: 20px;
+        }
+
+        img {
+            vertical-align: middle;
+        }
+
+        span {
+            margin-left: 10px;
+            font-size: 20px;
+            color: #5FB878;
+            text-shadow: 3px 3px 5px #e1e1e1;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <img src="/static/img/guidance.gif" width="100%" height="150">
+</div>
+<div>
+    <ul id="guidance">
+    </ul>
+</div>
+<script>
+    var data ={{.data}}, html = '';
+    data.forEach(function (item) {
+        html += '<li id="' + item.id + '" class="item"><img src="' + item.cover + '" width="100" height="100"> <span>' + item.title + '</span></li>';
+    });
+    $('#guidance').html(html);
+    $('.item').on('click', function () {
+        var id = $(this).attr('id');
+        window.location = '/guidance/detail?id=' + id;
+    });
+</script>
+</body>
+</html>

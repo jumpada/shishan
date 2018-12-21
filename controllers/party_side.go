@@ -6,34 +6,24 @@ import (
 )
 
 /**
-社区动态控制器
+党在身边控制器
  */
-type CommunityServiceController struct {
+type PartySideController struct {
 	beego.Controller
 }
 
 /**
-社区动态页面
+党在身边页面
  */
-func (c *CommunityServiceController) Page() {
-	c.TplName = "community_service/page.html"
-}
-
-/**
-社区动态数据
- */
-func (c *CommunityServiceController) List() {
-	type CommunityService struct {
+func (c *PartySideController) Page() {
+	type PartySide struct {
 		Id          int    `json:"id"`
 		Title       string `json:"title"`
 		Cover       string `json:"cover"`
 		Detail      string `json:"detail"`
 		ReleaseTime string `json:"releaseTime"`
 	}
-	var csArr []CommunityService
-	page, _ := c.GetInt("page")
-	limit, _ := c.GetInt("limit")
-	category, _ := c.GetInt("category")
+	var partySideArr []PartySide
 	o := orm.NewOrm()
 	_, err := o.Raw(`SELECT
 	id,
@@ -42,32 +32,29 @@ func (c *CommunityServiceController) List() {
 	detail,
 	DATE_FORMAT(release_time, '%Y-%m-%d %H:%i:%s') AS release_time
 FROM
-	ss_community_service
-WHERE
-	category = ?
-AND state = 1
+	ss_party_side
+WHERE state = 1
 ORDER BY
-	release_time DESC
-LIMIT ?,?`, category, (page-1)*limit, limit).QueryRows(&csArr)
+	create_time DESC`).QueryRows(&partySideArr)
 	if err == nil {
-		c.Data["json"] = csArr
+		c.Data["data"] = partySideArr
 	}
-	c.ServeJSON()
+	c.TplName = "party_side/page.html"
 }
 
 /**
 详细页面
  */
-func (c *CommunityServiceController) Detail() {
+func (c *PartySideController) Detail() {
 	id := c.GetString("id")
-	type CommunityService struct {
+	type PartySide struct {
 		Id          int    `json:"id"`
 		Title       string `json:"title"`
 		Cover       string `json:"cover"`
 		Detail      string `json:"detail"`
 		ReleaseTime string `json:"releaseTime"`
 	}
-	var communityService CommunityService
+	var partySide PartySide
 	o := orm.NewOrm()
 	err := o.Raw(`SELECT
 	id,
@@ -76,9 +63,9 @@ func (c *CommunityServiceController) Detail() {
 	detail,
 	DATE_FORMAT(release_time, '%Y-%m-%d %H:%i:%s') AS release_time
 FROM
-	ss_community_service WHERE id=?`, id).QueryRow(&communityService)
+	ss_party_side WHERE id=?`, id).QueryRow(&partySide)
 	if err == nil {
-		c.Data["data"] = communityService
+		c.Data["data"] = partySide
 	}
-	c.TplName = "community_service/detail.html"
+	c.TplName = "party_side/detail.html"
 }

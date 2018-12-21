@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>党在身边</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="/static/css/mui.css">
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/mui.js"></script>
+    <style>
+        .kr-article .kr-slider a {
+            height: 180px;
+            background-position: center;
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+
+        .kr-article .kr-table-view .mui-table-view-cell > a:not(.mui-btn) {
+            margin: -11px;
+        }
+
+        .kr-article .kr-table-view .mui-media-object img {
+            height: 90px;
+        }
+
+        .kr-article .kr-table-view .mui-media-body {
+            position: relative;
+            font-size: 14px;
+            white-space: normal;
+            height: 90px;
+        }
+
+        .kr-article-banner {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kr-article-cover {
+            background-position: center;
+            background-color: #ccc;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 180px;
+            position: relative;
+        }
+
+        .kr-article-cover img {
+            width: 100%;
+            height: 180px;
+        }
+
+        .kr-article-bar a {
+            color: gray;
+        }
+
+        .kr-article-title {
+            position: absolute;
+            left: 15px;
+            bottom: 15px;
+            width: 90%;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 21px;
+            color: white;
+            z-index: 11;
+        }
+
+        .kr-article-content {
+            background: #efeff4;
+        }
+
+        .kr-article-meta {
+            padding: 10px 0 10px 20px;
+            display: table;
+        }
+
+        .kr-article-meta div {
+            height: 30px;
+            font-size: 12px;
+            display: table-cell;
+            vertical-align: middle;
+            color: gray;
+            padding: 0 5px;
+        }
+
+        .kr-article-avatar img {
+            width: 30px;
+        }
+
+        .kr-article-text {
+            font-size: 13px !important;
+        }
+
+        .kr-article-article {
+            font-size: 15px;
+            padding: 0 15px;
+            color: #000;
+        }
+
+        .kr-article-article ol {
+            margin: 0 0 0 20px;
+            padding: 0;
+        }
+
+        .kr-article-article p {
+            color: #000;
+            font-size: 14px;
+            line-height: 23px;
+        }
+
+        embed, object {
+            display: none;
+        }
+
+        .kr-article-content {
+        }
+
+        .kr-browser .mui-bar .mui-btn {
+            top: 10px;
+            padding: 2px 12px 2px;
+        }
+
+        .kr-browser-bar a {
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+<div class="mui-content">
+    <!--顶部banner图 开始-->
+    <div id="kr-article-banner" class="kr-article-banner">
+        <div id="kr-article-cover" class="kr-article-cover">
+            <img src="" id="cover">
+        </div>
+        <h2 id="kr-article-title" class="kr-article-title"></h2>
+    </div>
+    <!--顶部banner图 结束-->
+
+    <div class="kr-article-content">
+        <!-- 文章作者、发布时间等信息 -->
+        <div class="kr-article-meta">
+            <div id="kr-article-author" class="kr-article-author">狮山社区</div>
+            <div class="kr-article-text">发表于</div>
+            <div id="kr-article-time" class="kr-article-time"></div>
+        </div>
+        <!--文章详细内容-->
+        <div id="kr-article-article" class="kr-article-article"></div>
+    </div>
+</div>
+<script>
+    var data = {{.data}};
+    $('#cover').attr('src', data.cover);
+    $('#kr-article-title').text(data.title);
+    $('#kr-article-article').html(data.detail);
+    $('#kr-article-time').text(data.releaseTime);
+</script>
+</body>
+</html>

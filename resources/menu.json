@@ -1,0 +1,85 @@
+{
+  "button": [
+    {
+      "name": "狮山之韵",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "社区介绍",
+          "url": "http://www.87v5o.com/introduction",
+          "sub_button": []
+        },
+        {
+          "type": "view",
+          "name": "狮山印象",
+          "url": "http://www.87v5o.com/impression",
+          "sub_button": []
+        },
+        {
+          "type": "view",
+          "name": "社区动态",
+          "url": "http://www.87v5o.com/community_service/page",
+          "sub_button": []
+        },
+        {
+          "type": "view",
+          "name": "办事指南",
+          "url": "http://www.87v5o.com/guidance/page",
+          "sub_button": []
+        }
+      ]
+    },
+    {
+      "name": "党建群团",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "党在身边",
+          "url": "http://www.87v5o.com/party_side/page",
+          "sub_button": []
+        },
+        {
+          "type": "view",
+          "name": "党员活动",
+          "url": "http://www.87v5o.com/party_activity/page",
+          "sub_button": []
+        },
+        {
+          "type": "view",
+          "name": "在线党课",
+          "url": "http://www.baidu.com",
+          "sub_button": []
+        }
+      ]
+    },
+    {
+      "name": "交流互动",
+      "sub_button": [
+        {
+          "type": "view",
+          "name": "我要咨询",
+          "url": "http://www.baidu.com",
+          "sub_button": []
+        },
+        {
+          "type": "view",
+          "name": "志愿者活动",
+          "url": "http://www.baidu.com",
+          "sub_button": []
+        },
+        {
+          "type": "view",
+          "name": "调查投票",
+          "url": "http://www.baidu.com",
+          "sub_button": []
+        },
+        {
+          "type": "view",
+          "name": "个人中心",
+          "url": "http://www.baidu.com",
+          "sub_button": []
+        }
+      ]
+    }
+  ]
+}

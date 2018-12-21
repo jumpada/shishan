@@ -233,7 +233,7 @@
                                             html += '<div class="mui-media-body"><div class="mui-ellipsis-2">' + item.title + '</div></div><div class="meta-info">';
                                             html += '<div class="author">狮山社区</div><div class="time">' + item.releaseTime + '</div></div> </a></li>';
                                         });
-                                        document.getElementById('tab' + (index + 1)).innerHTML = html;
+                                        $('#tab' + (index + 1)).append(html);
                                     } else {
                                         more = false;
                                     }
