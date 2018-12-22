@@ -32,7 +32,7 @@ func (c *CommunityServiceController) List() {
 	}
 	var csArr []CommunityService
 	page, _ := c.GetInt("page")
-	limit, _ := c.GetInt("limit")
+	pageSize, _ := c.GetInt("pageSize")
 	category, _ := c.GetInt("category")
 	o := orm.NewOrm()
 	_, err := o.Raw(`SELECT
@@ -48,7 +48,7 @@ WHERE
 AND state = 1
 ORDER BY
 	release_time DESC
-LIMIT ?,?`, category, (page-1)*limit, limit).QueryRows(&csArr)
+LIMIT ?,?`, category, (page-1)*pageSize, pageSize).QueryRows(&csArr)
 	if err == nil {
 		c.Data["json"] = csArr
 	}

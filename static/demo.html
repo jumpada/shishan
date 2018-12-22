@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <link rel="stylesheet" href="/static/css/ydui.css"/>
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/ydui.js"></script>
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        .banner img {
+            width: 100%;
+            height: 150px;
+        }
+
+        .list-item {
+            display: block;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            position: relative;
+            height: 80px;
+        }
+
+        .list-item .img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 80px;
+            width: 120px;
+        }
+
+        .list-item .img img {
+            width: 120px;
+            height: 80px;
+            vertical-align: middle;
+        }
+
+        .list-item .info {
+            position: absolute;
+            left: 120px;
+            top: 0;
+            right: 0;
+            height: 80px;
+        }
+
+        .list-item .info .title {
+            font-size: 14px;
+            padding: 4px;
+        }
+
+        .list-item .info .others {
+            color: grey;
+            position: absolute;
+            bottom: 0;
+            padding: 0 4px;
+            left: 0;
+            right: 0;
+        }
+
+        .list-item .info .others .time {
+            float: right;
+        }
+
+        .line {
+            height: 1px;
+            background-color: #eeeeee;
+            margin: 8px -5px;
+        }
+    </style>
+</head>
+<body>
+<section class="g-flexview">
+    <header class="m-navbar" style="height: 150px">
+        <div class="banner navbar-fixed">
+            <img src="/static/img/community_service.jpg">
+        </div>
+    </header>
+    <div class="m-tab g-scrollview" data-ydui-tab>
+        <ul class="tab-nav">
+            <li class="tab-nav-item tab-active"><a href="javascript:;">通知</a></li>
+            <li class="tab-nav-item"><a href="javascript:;">公告</a></li>
+        </ul>
+        <div class="tab-panel">
+            <div class="tab-panel-item tab-active">
+                <section id="list1">
+                    <div id="list-content1">
+                    </div>
+                </section>
+            </div>
+            <div class="tab-panel-item">
+                <section id="list2">
+                    <div id="list-content2"></div>
+                </section>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    var page1 = 1, page2 = 1, pageSize = 10;
+    $('#list1').infiniteScroll({
+        pageSize: pageSize,
+        loadingHtml: '<strong>加载中...</strong>',
+        loadListFn: function () {
+            var def = $.Deferred();
+            $.ajax({
+                url: '/community_service/list',
+                dataType: 'json',
+                data: {page: page1, pageSize: pageSize, category: 1},
+                success: function (data) {
+                    var html = '';
+                    data.forEach(function (item) {
+                        html += '<a href="javascript:;" class="list-item"><div class="img">';
+                        html += '<img src="' + item.cover + '"/></div><div class="info">';
+                        html += '<div class="title">' + item.title + '</div>';
+                        html += '<span class="others"><span class="author">狮山社区</span>';
+                        html += '<span class="time">' + item.releaseTime + '</span></div></div></a><div class="line"></div>';
+                    });
+                    $('#list-content1').append(html);
+                    def.resolve(data);
+                    ++page1;
+                }
+            });
+            return def.promise();
+        }
+    });
+    $('#list2').infiniteScroll({
+        pageSize: pageSize,
+        loadingHtml: '<strong>加载中...</strong>',
+        loadListFn: function () {
+            var def = $.Deferred();
+            $.ajax({
+                url: '/community_service/list',
+                dataType: 'json',
+                data: {page: page2, pageSize: pageSize, category: 2},
+                success: function (data) {
+                    var html = '';
+                    data.forEach(function (item) {
+                        html += '<a href="javascript:;" class="list-item"><div class="img">';
+                        html += '<img src="' + item.cover + '"/></div><div class="info">';
+                        html += '<div class="title">' + item.title + '</div>';
+                        html += '<span class="others"><span class="author">狮山社区</span>';
+                        html += '<span class="time">' + item.releaseTime + '</span></div></div></a><div class="line"></div>';
+                    });
+                    $('#list-content2').append(html);
+                    def.resolve(data);
+                    ++page2;
+                }
+            });
+            return def.promise();
+        }
+    });
+</script>
+</body>
+</html>
