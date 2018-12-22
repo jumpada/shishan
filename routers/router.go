@@ -32,4 +32,6 @@ func init() {
 	beego.Router("/party_side/detail", &controllers.PartySideController{}, "get:Detail")
 	//党员活动页面
 	beego.Router("/party_activity/page", &controllers.PartyActivityController{}, "get:Page")
+	//我要咨询页面
+	beego.Router("/consult/page", &controllers.ConsultController{}, "get:Page")
 }
