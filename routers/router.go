@@ -34,4 +34,14 @@ func init() {
 	beego.Router("/party_activity/page", &controllers.PartyActivityController{}, "get:Page")
 	//我要咨询页面
 	beego.Router("/consult/page", &controllers.ConsultController{}, "get:Page")
+	//我要咨询表单
+	beego.Router("/consult/form", &controllers.ConsultController{}, "get:Form")
+	//提交咨询表单
+	beego.Router("/consult/submit", &controllers.ConsultController{}, "get:Submit")
+	//我要咨询历史记录
+	beego.Router("/consult/history", &controllers.ConsultController{}, "get:History")
+	//咨询历史记录列表数据
+	beego.Router("/consult/list", &controllers.ConsultController{}, "get:List")
+	//我要咨询详细页面
+	beego.Router("/consult/detail", &controllers.ConsultController{}, "get:Detail")
 }

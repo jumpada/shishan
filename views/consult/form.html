@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我要咨询</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <link rel="stylesheet" href="/static/css/mui.css">
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/mui.js"></script>
+    <style>
+        html,body {
+            background-color: #efeff4;
+        }
+
+        input,
+        textarea {
+            border: none !important;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        p {
+            padding: 10px 15px 0;
+        }
+
+        input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="mui-content">
+    <p>标题</p>
+    <div class="row mui-input-row">
+        <input id='title' type="text" class="mui-input-clear title" placeholder="咨询标题"/>
+    </div>
+    <p>详细内容</p>
+    <div class="row mui-input-row">
+        <textarea id='content' class="mui-input-clear content" placeholder="请详细描述你的问题和意见..."></textarea>
+    </div>
+    <p>联系方式（选填）</p>
+    <div class="row mui-input-row">
+        <input id='contact' type="text" class="mui-input-clear contact" placeholder="(选填,方便我们联系你 )"/>
+    </div>
+    <div style="text-align: center;margin-top: 20px;">
+        <button type="button" class="mui-btn mui-btn-primary" style="width: 90%; " id="submit">提交</button>
+    </div>
+</div>
+<script>
+    var openId = {{.openId}};
+    $('#submit').on('click', function () {
+        var data = {}, title = $('#title').val(), content = $('#content').val(), contact = $('#contact').val(),
+            state = false;
+        data.openId = openId;
+        if (!title) {
+            mui.toast('请输入标题', {duration: 'short', type: 'div'});
+        } else if (!content) {
+            mui.toast('请输入详细内容', {duration: 'short', type: 'div'});
+        } else {
+            data.title = title;
+            data.content = content;
+            if (contact) {
+                data.contact = contact;
+            }
+            $.ajax({
+                url: '/consult/submit',
+                type: 'GET',
+                dataType: 'json',
+                data: data,
+                cache: false,
+                async: false,
+                success: function (data) {
+                    state = data.state;
+                }
+            });
+            if (state) {
+                mui.toast('数据提交成功', {duration: 'short', type: 'div'});
+                window.location = '/consult/page?openId=' + openId;
+            }
+        }
+    });
+</script>
+</body>
+</html>

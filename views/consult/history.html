@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>demo</title>
+    <title>咨询历史记录</title>
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
     <meta content="yes" name="apple-mobile-web-app-capable"/>
     <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
@@ -11,8 +11,8 @@
     <script src="/static/js/jquery.js"></script>
     <script src="/static/js/ydui.js"></script>
     <style>
-        body {
-            overflow: hidden;
+        html, body {
+            background-color: #ffffff;
         }
 
         .banner img {
@@ -25,54 +25,32 @@
             -webkit-box-sizing: border-box;
             -moz-box-sizing: border-box;
             box-sizing: border-box;
-            position: relative;
-            height: 80px;
         }
 
-        .list-item .img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 80px;
-            width: 120px;
-        }
-
-        .list-item .img img {
-            width: 120px;
-            height: 80px;
-            vertical-align: middle;
+        .list-item .title {
+            font-size: 14px;
+            padding: 8px;
         }
 
         .list-item .info {
-            position: absolute;
-            left: 120px;
-            top: 0;
-            right: 0;
-            height: 80px;
+            padding: 8px;
+            font-size: 12px;
         }
 
-        .list-item .info .title {
-            font-size: 14px;
-            padding: 4px;
-        }
-
-        .list-item .info .others {
+        .list-item .info .time {
+            float: left;
             color: grey;
-            position: absolute;
-            bottom: 0;
-            padding: 0 4px;
-            left: 0;
-            right: 0;
         }
 
-        .list-item .info .others .time {
+        .list-item .info .state {
             float: right;
+            /*color: grey;*/
         }
 
         .line {
             height: 1px;
             background-color: #eeeeee;
-            margin: 8px -5px;
+            margin: 15px -5px;
         }
     </style>
 </head>
@@ -80,7 +58,7 @@
 <section class="g-flexview">
     <header class="m-navbar" style="height: 150px">
         <div class="banner navbar-fixed">
-            <img src="/static/img/community_service.jpg">
+            <img src="/static/img/welcome.gif">
         </div>
     </header>
     <section class="g-scrollview">
@@ -102,11 +80,18 @@
                 success: function (data) {
                     var html = '';
                     data.forEach(function (item) {
-                        html += '<a href="javascript:;" class="list-item"><div class="img">';
-                        html += '<img src="' + item.cover + '"/></div><div class="info">';
+                        html += '<a href="/consult/detail?id=' + item.id + '" class="list-item">';
                         html += '<div class="title">' + item.title + '</div>';
-                        html += '<span class="others"><span class="author">狮山社区</span>';
-                        html += '<span class="time">' + item.releaseTime + '</span></div></div></a><div class="line"></div>';
+                        html += '<div class="info">';
+                        html += '<span class="time">咨询于 ' + item.consultTime + '</span>';
+                        if (item.state == 0) {
+                            html += '<span class="state" style="color:red;"><i class="icon-phone1"></i>未回复</span>';
+                        } else if (item.state == 1) {
+                            html += '<span class="state" style="color:green;"><i class="icon-phone1"></i>已回复</span>';
+                        } else {
+                            html += '<span class="state" style="color:grey;"><i class="icon-phone1"></i>已查看</span>';
+                        }
+                        html += '</div></a><div class="line"></div>';
                     });
                     $('#list').append(html);
                     def.resolve(data);
