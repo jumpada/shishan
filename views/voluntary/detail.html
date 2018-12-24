@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>详细页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <script src="/static/js/jquery.js"></script>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
+        table {
+            border: 1px solid #e1e1e1;
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        td {
+            border: 1px solid #e1e1e1;
+            padding: 8px 5px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <img src="/static/img/voluntary.gif" width="100%" height="200">
+</div>
+<div style="padding: 8px;">
+    <table>
+        <tr>
+            <td>服务名称：</td>
+            <td id="name"></td>
+        </tr>
+        <tr>
+            <td>服务对象：</td>
+            <td id="target"></td>
+        </tr>
+        <tr>
+            <td>服务地点：</td>
+            <td id="address"></td>
+        </tr>
+        <tr>
+            <td>招募人数：</td>
+            <td id="num"></td>
+        </tr>
+        <tr>
+            <td>招募期限：</td>
+            <td id="timeLimit"></td>
+        </tr>
+        <tr>
+            <td id="detail" colspan="2"></td>
+        </tr>
+    </table>
+</div>
+<script>
+    var data = {{.data}};
+    $('#name').text(data.name);
+    $('#target').text(data.target);
+    $('#address').text(data.address);
+    $('#num').text(data.num);
+    $('#timeLimit').text(data.timeLimit);
+    $('#detail').html(data.detail);
+</script>
+</body>
+</html>

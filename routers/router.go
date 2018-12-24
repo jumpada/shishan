@@ -44,4 +44,11 @@ func init() {
 	beego.Router("/consult/list", &controllers.ConsultController{}, "get:List")
 	//我要咨询详细页面
 	beego.Router("/consult/detail", &controllers.ConsultController{}, "get:Detail")
+	beego.Router("/voluntary/page", &controllers.VoluntaryController{}, "get:Page")
+	beego.Router("/voluntary/list", &controllers.VoluntaryController{}, "get:List")
+	beego.Router("/voluntary/detail", &controllers.VoluntaryController{}, "get:Detail")
+	beego.Router("/vote/page", &controllers.VoteController{}, "get:Page")
+	beego.Router("/vote/list", &controllers.VoteController{}, "get:List")
+	beego.Router("/vote/detail", &controllers.VoteController{}, "get:Detail")
+	beego.Router("/vote/submit", &controllers.VoteController{}, "get:Submit")
 }

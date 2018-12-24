@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>志愿者活动</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <link rel="stylesheet" href="/static/css/mui.css">
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/mui.js"></script>
+    <script src="/static/js/mui.pullToRefresh.js"></script>
+    <script src="/static/js/mui.pullToRefresh.material.js"></script>
+    <script src="/static/js/jquery.downCount.js"></script>
+    <style>
+        .mui-bar ~ .mui-content .mui-fullscreen {
+            top: 44px;
+            height: auto;
+        }
+
+        .mui-pull-top-tips {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            margin-left: -25px;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            z-index: 1;
+        }
+
+        .mui-bar ~ .mui-pull-top-tips {
+            top: 24px;
+        }
+
+        .mui-pull-top-wrapper {
+            width: 42px;
+            height: 42px;
+            display: block;
+            text-align: center;
+            background-color: #efeff4;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            background-clip: padding-box;
+            box-shadow: 0 4px 10px #bbb;
+            overflow: hidden;
+        }
+
+        .mui-pull-top-tips.mui-transitioning {
+            -webkit-transition-duration: 200ms;
+            transition-duration: 200ms;
+        }
+
+        .mui-pull-top-tips .mui-pull-loading {
+            /*-webkit-backface-visibility: hidden;
+            -webkit-transition-duration: 400ms;
+            transition-duration: 400ms;*/
+
+            margin: 0;
+        }
+
+        .mui-pull-top-wrapper .mui-icon,
+        .mui-pull-top-wrapper .mui-spinner {
+            margin-top: 7px;
+        }
+
+        .mui-pull-top-wrapper .mui-icon.mui-reverse {
+            /*-webkit-transform: rotate(180deg) translateZ(0);*/
+        }
+
+        .mui-pull-bottom-tips {
+            text-align: center;
+            background-color: #efeff4;
+            font-size: 15px;
+            line-height: 40px;
+            color: #777;
+        }
+
+        .mui-pull-top-canvas {
+            overflow: hidden;
+            background-color: #fafafa;
+            border-radius: 40px;
+            box-shadow: 0 4px 10px #bbb;
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+        }
+
+        .mui-pull-top-canvas canvas {
+            width: 40px;
+        }
+
+        .mui-slider-indicator.mui-segmented-control {
+            background-color: #efeff4;
+        }
+
+        .mui-table-view .mui-media-object {
+            max-width: initial;
+            width: 90px !important;
+            height: 70px;
+        }
+
+        .meta-info {
+            position: absolute;
+            left: 115px;
+            right: 15px;
+            bottom: 8px;
+            color: #8f8f94;
+        }
+
+        .meta-info .author,
+        .meta-info .time {
+            display: inline-block;
+            font-size: 12px;
+        }
+
+        .meta-info .time {
+            float: right;
+        }
+
+        .mui-table-view:before,
+        .mui-table-view:after {
+            height: 0;
+        }
+
+        .mui-content > .mui-table-view:first-child {
+            margin-top: 1px;
+        }
+
+        .info {
+            color: grey;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .info .time-info {
+            float: left;
+        }
+
+        .info .state-info {
+            float: right;
+        }
+
+        .countdown {
+            list-style: none;
+            display: inline-block;
+            margin: 0 4px -9px 4px;
+            padding: 0;
+        }
+
+        .countdown li {
+            display: block;
+            float: left;
+            color: orange;
+        }
+
+        .seconds, .minutes, .hours, .days {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <img src="/static/img/voluntary.gif" width="100%" height="200">
+</div>
+<div class="mui-content">
+    <div id="slider" class="mui-slider mui-fullscreen" style="top: 201px;">
+        <div id="sliderSegmentedControl"
+             class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+            <div>
+                <a class="mui-control-item mui-active" href="#item1mobile" style="padding: 0 50px">
+                    招募中
+                </a>
+                <a class="mui-control-item" href="#item2mobile" style="padding: 0 50px">
+                    已结束
+                </a>
+            </div>
+        </div>
+        <div class="mui-slider-group">
+            <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+                <div id="scroll1" class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                        <ul class="mui-table-view" id="tab1">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="item2mobile" class="mui-slider-item mui-control-content">
+                <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                        <ul class="mui-table-view" id="tab2">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    mui.init();
+    var page = 1, more = true;
+    mui('.mui-scroll-wrapper').scroll({
+        bounce: false,
+        indicators: true, //是否显示滚动条
+        deceleration: 0.0006
+    });
+    mui.ready(function () {
+        //循环初始化所有下拉刷新，上拉加载。
+        mui.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function (index, pullRefreshEl) {
+            mui(pullRefreshEl).pullToRefresh({
+                down: {
+                    callback: function () {
+                        more = true;
+                        var self = this, state = 0;
+                        if (index == 0) {
+                            state = 1;
+                        } else {
+                            state = 0;
+                        }
+                        $.ajax({
+                            url: '/voluntary/list',
+                            type: 'GET',
+                            dataType: 'json',
+                            data: {
+                                page: 1,
+                                pageSize: 10,
+                                state: state
+                            },
+                            cache: false,
+                            async: false,
+                            success: function (data) {
+                                self.endPullDownToRefresh();
+                                if (data && data.length > 0) {
+                                    var html = '';
+                                    data.forEach(function (item) {
+                                        html += '<li class="mui-table-view-cell" id="' + item.id + '"><a href="javascript:;">';
+                                        html += '<div class="mui-ellipsis-2">' + item.name + '</div><div class="info"><div class="time-info">于';
+                                        html += '<ul class="countdown countdown' + item.id + '"><li><span class="days">00</span><span>天</span></li>';
+                                        html += '<li><span class="hours">00</span><span>时</span></li><li><span class="minutes">00</span><span>分</span></li>';
+                                        html += '<li><span class="seconds">00</span><span>秒</span></li></ul>后结束</div>';
+                                        html += '<div class="state-info" style="color: grey;" >目标人数：' + item.num + '</div>';
+                                        html += '</div></a></li>';
+                                        html += '<script>$(\'.countdown' + item.id + '\').downCount({date: \'' + item.timeLimitCount + '\',offset: +8});</scr' + 'ipt>';
+                                    });
+                                    $('#tab' + (index + 1)).html(html)
+                                }
+                            }
+                        });
+                    }
+                },
+                up: {
+                    callback: function () {
+                        var self = this, state = 0;
+                        if (index == 0) {
+                            state = 1;
+                        } else {
+                            state = 0;
+                        }
+                        var param = {
+                            page: page + 1,
+                            pageSize: 10,
+                            state: state
+                        };
+                        if (more) {
+                            $.ajax({
+                                url: '/voluntary/list',
+                                type: 'GET',
+                                dataType: 'json',
+                                data: param,
+                                cache: false,
+                                async: false,
+                                success: function (data) {
+                                    self.endPullUpToRefresh();
+                                    if (data && data.length > 0) {
+                                        page++;
+                                        var html = '';
+                                        data.forEach(function (item) {
+                                            html += '<li class="mui-table-view-cell" id="' + item.id + '"><a href="javascript:;">';
+                                            html += '<div class="mui-ellipsis-2">' + item.name + '</div><div class="info"><div class="time-info">于';
+                                            html += '<ul class="countdown countdown' + item.id + '"><li><span class="days">00</span><span>天</span></li>';
+                                            html += '<li><span class="hours">00</span><span>时</span></li><li><span class="minutes">00</span><span>分</span></li>';
+                                            html += '<li><span class="seconds">00</span><span>秒</span></li></ul>后结束</div>';
+                                            html += '<div class="state-info" style="color: grey;" >目标人数：' + item.num + '</div>';
+                                            html += '</div></a></li>';
+                                            html += '<script>$(\'.countdown' + item.id + '\').downCount({date: \'' + item.timeLimitCount + '\',offset: +8});</scr' + 'ipt>';
+                                        });
+                                        $('#tab' + (index + 1)).append(html);
+                                    } else {
+                                        more = false;
+                                    }
+                                }
+                            });
+                        } else {
+                            self.endPullUpToRefresh();
+                        }
+                    }
+                }
+            });
+        });
+    });
+    mui("#tab1").on('tap', '.mui-table-view-cell', function () {
+        // //获取id
+        var id = this.getAttribute("id");
+        window.location = '/voluntary/detail?id=' + id;
+    });
+    mui("#tab2").on('tap', '.mui-table-view-cell', function () {
+        // //获取id
+        var id = this.getAttribute("id");
+        window.location = '/voluntary/detail?id=' + id;
+    });
+    $(function () {
+        $.ajax({
+            url: '/voluntary/list',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                page: 1,
+                pageSize: 10,
+                state: 1
+            },
+            cache: false,
+            async: false,
+            success: function (data) {
+                if (data && data.length > 0) {
+                    var html = '';
+                    data.forEach(function (item) {
+                        html += '<li class="mui-table-view-cell" id="' + item.id + '"><a href="javascript:;">';
+                        html += '<div class="mui-ellipsis-2">' + item.name + '</div><div class="info"><div class="time-info">于';
+                        html += '<ul class="countdown countdown' + item.id + '"><li><span class="days">00</span><span>天</span></li>';
+                        html += '<li><span class="hours">00</span><span>时</span></li><li><span class="minutes">00</span><span>分</span></li>';
+                        html += '<li><span class="seconds">00</span><span>秒</span></li></ul>后结束</div>';
+                        html += '<div class="state-info" style="color: grey;" >目标人数：' + item.num + '</div>';
+                        html += '</div></a></li>';
+                        html += '<script>$(\'.countdown' + item.id + '\').downCount({date: \'' + item.timeLimitCount + '\',offset: +8});</scr' + 'ipt>';
+                    });
+                    $('#tab1').html(html);
+                }
+            }
+        });
+        $.ajax({
+            url: '/voluntary/list',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                page: 1,
+                pageSize: 10,
+                state: 0
+            },
+            cache: false,
+            async: false,
+            success: function (data) {
+                if (data && data.length > 0) {
+                    var html = '';
+                    data.forEach(function (item) {
+                        html += '<li class="mui-table-view-cell" id="' + item.id + '"><a href="javascript:;">';
+                        html += '<div class="mui-ellipsis-2">' + item.name + '</div><div class="info"><div class="time-info">于';
+                        html += '<ul class="countdown countdown' + item.id + '"><li><span class="days">00</span><span>天</span></li>';
+                        html += '<li><span class="hours">00</span><span>时</span></li><li><span class="minutes">00</span><span>分</span></li>';
+                        html += '<li><span class="seconds">00</span><span>秒</span></li></ul>后结束</div>';
+                        html += '<div class="state-info" style="color: grey;" >目标人数：' + item.num + '</div>';
+                        html += '</div></a></li>';
+                        html += '<script>$(\'.countdown' + item.id + '\').downCount({date: \'' + item.timeLimitCount + '\',offset: +8});</scr' + 'ipt>';
+                    });
+                    $('#tab2').html(html);
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
