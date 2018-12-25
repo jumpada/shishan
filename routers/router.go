@@ -51,4 +51,9 @@ func init() {
 	beego.Router("/vote/list", &controllers.VoteController{}, "get:List")
 	beego.Router("/vote/detail", &controllers.VoteController{}, "get:Detail")
 	beego.Router("/vote/submit", &controllers.VoteController{}, "get:Submit")
+
+
+	beego.Router("/sign/volunteer_Info", &controllers.SignController{}, "get:VolunteerInfo")
+	beego.Router("/sign/voluntary_list", &controllers.SignController{}, "get:VoluntaryList")
+	beego.Router("/sign/sign", &controllers.SignController{}, "get:Sign")
 }
