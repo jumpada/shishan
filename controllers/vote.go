@@ -66,7 +66,7 @@ func (c *VoteController) List() {
 		'%m/%d/%Y %H:%i:%s'
 	) AS time_limit_count
 FROM
-	vote
+	ss_vote
 WHERE
 	state = 1
 ORDER BY
@@ -111,7 +111,7 @@ func (c *VoteController) Detail() {
 	category,
 	state
 FROM
-	vote
+	ss_vote
 WHERE
 	id =?`, id).QueryRow(&vote)
 	if err == nil {
@@ -119,7 +119,7 @@ WHERE
 	}
 	var options []VoteOption
 	var voted Voted
-	_, err1 := o.Raw("SELECT id,`option` FROM vote_option WHERE vote_id=?", id).QueryRows(&options)
+	_, err1 := o.Raw("SELECT id,`option` FROM ss_vote_option WHERE vote_id=?", id).QueryRows(&options)
 	if err1 == nil {
 		var ops []VoteOption
 		for _, option := range options {
@@ -129,7 +129,7 @@ WHERE
 			_ = o.Raw(`SELECT
 	count(*) AS num
 FROM
-	voted
+	ss_voted
 WHERE
 	open_id =?
 AND option_id =?`, openId, option.Id).QueryRow(&voted)
@@ -141,9 +141,9 @@ AND option_id =?`, openId, option.Id).QueryRow(&voted)
 	err2 := o.Raw(`SELECT
 	count(*) AS num
 FROM
-	voted A
-LEFT JOIN vote_option B ON A.option_id = B.id
-LEFT JOIN vote C ON B.vote_id = C.id
+	ss_voted A
+LEFT JOIN ss_vote_option B ON A.option_id = B.id
+LEFT JOIN ss_vote C ON B.vote_id = C.id
 WHERE
 	A.open_id =?
 AND C.id =?`, openId, id).QueryRow(&voted)
@@ -159,7 +159,7 @@ func (c *VoteController) Submit() {
 	optionArr := strings.Split(options, "☻")
 	o := orm.NewOrm()
 	for _, value := range optionArr {
-		_, _ = o.Raw(`INSERT INTO voted (open_id, option_id)
+		_, _ = o.Raw(`INSERT INTO ss_voted (open_id, option_id)
 VALUES
 	(?,?)`, openId, value).Exec()
 	}

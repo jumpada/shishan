@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>妇联侨团</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <script src="/static/js/jquery.js"></script>
+    <style>
+        p {
+            line-height: 28px;
+        }
+    </style>
+</head>
+<body>
+<div id="detail"></div>
+<script>
+    var data ={{.data}};
+    $('#detail').html(data.detail);
+</script>
+</body>
+</html>

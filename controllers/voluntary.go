@@ -55,7 +55,7 @@ func (c *VoluntaryController) List() {
 		'%Y-%m-%d %H:%i:%s'
 	) AS create_time
 FROM
-	voluntary
+	ss_voluntary
 WHERE
 	state = ?
 ORDER BY
@@ -102,7 +102,7 @@ func (c *VoluntaryController) Detail() {
 		'%Y-%m-%d %H:%i:%s'
 	) AS create_time
 FROM
-	voluntary
+	ss_voluntary
 WHERE
 	id =?`, id).QueryRow(&voluntary)
 	if err == nil {

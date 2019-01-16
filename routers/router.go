@@ -56,4 +56,9 @@ func init() {
 	beego.Router("/sign/volunteer_Info", &controllers.SignController{}, "get:VolunteerInfo")
 	beego.Router("/sign/voluntary_list", &controllers.SignController{}, "get:VoluntaryList")
 	beego.Router("/sign/sign", &controllers.SignController{}, "get:Sign")
+
+
+	beego.Router("/dw", &controllers.DwController{})
+
+	beego.Router("/fl", &controllers.FlController{})
 }
