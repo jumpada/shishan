@@ -52,13 +52,20 @@ func init() {
 	beego.Router("/vote/detail", &controllers.VoteController{}, "get:Detail")
 	beego.Router("/vote/submit", &controllers.VoteController{}, "get:Submit")
 
-
 	beego.Router("/sign/volunteer_Info", &controllers.SignController{}, "get:VolunteerInfo")
 	beego.Router("/sign/voluntary_list", &controllers.SignController{}, "get:VoluntaryList")
 	beego.Router("/sign/sign", &controllers.SignController{}, "get:Sign")
 
-
 	beego.Router("/dw", &controllers.DwController{})
 
 	beego.Router("/fl", &controllers.FlController{})
+
+	//登录
+	beego.Router("/api/login", &controllers.ApiController{}, "get:Login")
+	//志愿者活动列表
+	beego.Router("/api/voluntary/list", &controllers.ApiController{}, "get:VoluntaryList")
+	//志愿者信息
+	beego.Router("/api/volunteer/info", &controllers.ApiController{}, "get:VolunteerInfo")
+	//志愿者活动签到
+	beego.Router("/api/voluntary/sign", &controllers.ApiController{}, "get:VoluntarySign")
 }

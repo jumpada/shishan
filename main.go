@@ -12,5 +12,7 @@ func init() {
 }
 func main() {
 	beego.SetStaticPath("/resources", "resources")
+	beego.SetStaticPath("/.well-known", ".well-known")
+	beego.SetStaticPath("/MP_verify_1oIq6VPv7tFQDiyp.txt", "MP_verify_1oIq6VPv7tFQDiyp.txt")
 	beego.Run()
 }

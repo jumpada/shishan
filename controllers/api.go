@@ -6,17 +6,75 @@ import (
 	"time"
 )
 
-/**
-签到控制器
- */
-type SignController struct {
+type ApiController struct {
 	beego.Controller
+}
+
+/**
+登录
+ */
+func (c *ApiController) Login() {
+	result := make(map[string]interface{})
+	username := c.GetString("username")
+	password := c.GetString("password")
+	type User struct {
+		Username string
+		Password string
+	}
+	var user User
+	o := orm.NewOrm()
+	err := o.Raw(`SELECT
+	username,
+	original_pwd AS password
+FROM
+	base_user
+WHERE
+	username =?`, username).QueryRow(&user)
+	if err == nil {
+		if user.Password == password {
+			result["state"] = true
+		} else {
+			result["state"] = false
+			result["code"] = 2
+		}
+	} else {
+		result["state"] = false
+		result["code"] = 1
+
+	}
+	c.Data["json"] = result
+	c.ServeJSON()
+}
+
+/**
+志愿者活动列表
+ */
+func (c *ApiController) VoluntaryList() {
+	type Voluntary struct {
+		Id   int    `json:"id"`
+		Name string `json:"name"`
+	}
+	var voluntaryArr []Voluntary
+	o := orm.NewOrm()
+	_, err := o.Raw(`SELECT
+	id,
+	name
+FROM
+	ss_voluntary
+WHERE
+	state = 1
+ORDER BY
+	create_time DESC`).QueryRows(&voluntaryArr)
+	if err == nil {
+		c.Data["json"] = voluntaryArr
+	}
+	c.ServeJSON()
 }
 
 /**
 志愿者信息
  */
-func (c *SignController) VolunteerInfo() {
+func (c *ApiController) VolunteerInfo() {
 	result := make(map[string]interface{})
 	id, err := c.GetInt("id")
 	if err == nil {
@@ -49,40 +107,18 @@ WHERE
 }
 
 /**
-志愿者活动列表
+志愿者活动签到
  */
-func (c *SignController) VoluntaryList() {
-	type Voluntary struct {
-		Id   int    `json:"id"`
-		Name string `json:"name"`
-	}
-	var voluntaryArr []Voluntary
-	o := orm.NewOrm()
-	_, err := o.Raw(`SELECT
-	id,
-	name
-FROM
-	ss_voluntary
-WHERE
-	state = 1
-ORDER BY
-	create_time DESC`).QueryRows(&voluntaryArr)
-	if err == nil {
-		c.Data["json"] = voluntaryArr
-	}
-	c.ServeJSON()
-}
-
-/**
-签到
- */
-func (c *SignController) Sign() {
+func (c *ApiController) VoluntarySign() {
 	volunteerId, _ := c.GetInt("volunteerId")
 	voluntaryId, _ := c.GetInt("voluntaryId")
 	o := orm.NewOrm()
 	_ = o.Begin()
 	type Count struct {
 		Num int
+	}
+	type Voluntary struct {
+		Score int
 	}
 	var count Count
 	err := o.Raw(`SELECT
@@ -108,16 +144,28 @@ VALUES
 				num, err := res.RowsAffected()
 				if err == nil {
 					if num == 1 {
-						res, err = o.Raw(`UPDATE volunteer
-SET score = score + 1
-WHERE
-	id = ?`, volunteerId).Exec()
+						var voluntary Voluntary
+						err := o.Raw(`SELECT
+									score
+									FROM
+										ss_voluntary
+									WHERE
+									id =?`, voluntaryId).QueryRow(&voluntary)
 						if err == nil {
-							num, err := res.RowsAffected()
+							res, err = o.Raw(`UPDATE ss_volunteer
+											SET score = score + ?
+											WHERE
+											id = ?`, voluntary.Score, volunteerId).Exec()
 							if err == nil {
-								if num == 1 {
-									c.Data["json"] = map[string]interface{}{"state": true}
-									_ = o.Commit()
+								num, err := res.RowsAffected()
+								if err == nil {
+									if num == 1 {
+										c.Data["json"] = map[string]interface{}{"state": true}
+										_ = o.Commit()
+									} else {
+										c.Data["json"] = map[string]interface{}{"state": false, "code": 2}
+										_ = o.Rollback()
+									}
 								} else {
 									c.Data["json"] = map[string]interface{}{"state": false, "code": 2}
 									_ = o.Rollback()
@@ -126,6 +174,7 @@ WHERE
 								c.Data["json"] = map[string]interface{}{"state": false, "code": 2}
 								_ = o.Rollback()
 							}
+
 						} else {
 							c.Data["json"] = map[string]interface{}{"state": false, "code": 2}
 							_ = o.Rollback()

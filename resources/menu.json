@@ -1,27 +1,32 @@
 {
   "button": [
     {
-      "name": "党建群团",
+      "name": "先锋狮山",
       "sub_button": [
         {
           "type": "view",
+          "name": "党委简介",
+          "url": "http://www.51szlife.com/dw"
+        },
+        {
+          "type": "view",
           "name": "党在身边",
-          "url": "http://www.87v5o.com/party_side/page"
+          "url": "http://www.51szlife.com/party_side/page"
         },
         {
           "type": "view",
           "name": "党员活动",
-          "url": "http://www.87v5o.com/party_activity/page"
-        },
-        {
-          "type": "view",
-          "name": "妇联侨团",
-          "url": "http://www.baidu.com"
+          "url": "http://www.51szlife.com/party_activity/page"
         },
         {
           "type": "view",
           "name": "在线党课",
           "url": "http://www.jsxf.gov.cn/pub/jsxfzt/xjpxsds/index_605.html"
+        },
+        {
+          "type": "view",
+          "name": "妇联侨团",
+          "url": "http://www.51szlife.com/fl"
         }
       ]
     },
@@ -31,22 +36,22 @@
         {
           "type": "view",
           "name": "社区介绍",
-          "url": "http://www.87v5o.com/introduction"
+          "url": "http://www.51szlife.com/introduction"
         },
         {
           "type": "view",
           "name": "狮山印象",
-          "url": "http://www.87v5o.com/impression"
+          "url": "http://www.51szlife.com/impression"
         },
         {
           "type": "view",
           "name": "社区动态",
-          "url": "http://www.87v5o.com/community_service/page"
+          "url": "http://www.51szlife.com/community_service/page"
         },
         {
           "type": "view",
-          "name": "办事指南",
-          "url": "http://www.87v5o.com/guidance/page"
+          "name": "全科服务",
+          "url": "http://www.51szlife.com/guidance/page"
         }
       ]
     },
@@ -55,23 +60,18 @@
       "sub_button": [
         {
           "type": "view",
-          "name": "我要咨询",
-          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx759be56776fa98f9&redirect_uri=http://www.87v5o.com/consult/page&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
+          "name": "格格咨询台",
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx122bcb1380d81f04&redirect_uri=http://www.51szlife.com/consult/page&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
         },
         {
           "type": "view",
           "name": "志愿者活动",
-          "url": "http://www.87v5o.com/voluntary/page"
+          "url": "http://www.51szlife.com/voluntary/page"
         },
         {
           "type": "view",
-          "name": "调查投票",
-          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx759be56776fa98f9&redirect_uri=http://www.87v5o.com/vote/page&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
-        },
-        {
-          "type": "view",
-          "name": "个人中心",
-          "url": "http://www.baidu.com"
+          "name": "网上议事厅",
+          "url": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx122bcb1380d81f04&redirect_uri=http://www.51szlife.com/vote/page&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect"
         }
       ]
     }
